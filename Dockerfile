@@ -32,6 +32,16 @@ RUN set -x \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 
+RUN echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote=true ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.port=8099 ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.rmi.port=8099 ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.local.only=true ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.host=localhost ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Djava.rmi.server.hostname=localhost ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.authenticate=false ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.ssl=false ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh \
+    && echo 'export CATALINA_OPTS' >> /opt/atlassian/jira/bin/setenv.sh
+
 RUN wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
       -O /usr/local/share/ca-certificates/rds-combined-ca-bundle.pem && \
     update-ca-certificates
