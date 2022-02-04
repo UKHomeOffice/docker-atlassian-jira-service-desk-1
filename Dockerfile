@@ -44,6 +44,9 @@ RUN echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote=true ${CATALINA_OPTS}"' 
 RUN sed -i 's/JVM_MINIMUM_MEMORY="384m"/JVM_MINIMUM_MEMORY=${JVM_MINIMUM_MEMORY:="384m"}/g' ${JIRA_INSTALL}/bin/setenv.sh \
     && sed -i 's/JVM_MAXIMUM_MEMORY="2048m"/JVM_MAXIMUM_MEMORY=${JVM_MAXIMUM_MEMORY:="2048m"}/g' ${JIRA_INSTALL}/bin/setenv.sh
 
+# suppressing 'The encoding [binary] is not recognised by the JRE' warning bug: https://jira.atlassian.com/browse/JRASERVER-71265
+RUN echo "org.apache.catalina.connector.Response.level = ERROR" >> ${JIRA_INSTALL}/conf/logging.properties
+
 RUN wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
       -O /usr/local/share/ca-certificates/rds-combined-ca-bundle.pem && \
     update-ca-certificates
