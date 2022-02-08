@@ -17,10 +17,4 @@ if [ "$(stat -c "%Y" "${JIRA_INSTALL}/conf/server.xml")" -eq "0" ]; then
     xmlstarlet ed --inplace --pf --ps --update '//Context/@path' --value "${X_PATH}" "${JIRA_INSTALL}/conf/server.xml"
   fi
 fi
-
-# increasing catalina cache to remove startup warnings
-if [ "$(stat -c "%Y" "${JIRA_INSTALL}/conf/server.xml")" -eq "0" ]; then  
-  xmlstarlet ed --inplace --pf --ps --subnode '/Context' --type "elem" --name "Resources" "${JIRA_INSTALL}/conf/context.xml"
-  xmlstarlet ed --inplace --pf --ps --insert '/Context/Resources' --type "attr" --name "cacheMaxSize" --value "71680" "${JIRA_INSTALL}/conf/context.xml"
-fi
 exec "$@"

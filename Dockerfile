@@ -29,8 +29,7 @@ RUN set -x \
     && chown -R jira:jira      "${JIRA_INSTALL}/work" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
-    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" \
-    && touch -d "@0"           "${JIRA_INSTALL}/conf/context.xml" 
+    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" 
 
 RUN echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote=true ${CATALINA_OPTS}"' >> ${JIRA_INSTALL}/bin/setenv.sh \
     && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.port=8099 ${CATALINA_OPTS}"' >> ${JIRA_INSTALL}/bin/setenv.sh \
