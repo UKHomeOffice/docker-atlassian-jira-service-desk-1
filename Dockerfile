@@ -41,6 +41,8 @@ RUN set -x \
 #     && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.ssl=false ${CATALINA_OPTS}"' >> ${JIRA_INSTALL}/bin/setenv.sh \
 #     && echo 'export CATALINA_OPTS' >> ${JIRA_INSTALL}/bin/setenv.sh
 
+RUN echo 'export CATALINA_OPTS' >> ${JIRA_INSTALL}/bin/setenv.sh
+
 RUN sed -i 's/JVM_MINIMUM_MEMORY="384m"/JVM_MINIMUM_MEMORY=${JVM_MINIMUM_MEMORY:="384m"}/g' ${JIRA_INSTALL}/bin/setenv.sh \
     && sed -i 's/JVM_MAXIMUM_MEMORY="2048m"/JVM_MAXIMUM_MEMORY=${JVM_MAXIMUM_MEMORY:="2048m"}/g' ${JIRA_INSTALL}/bin/setenv.sh
 
