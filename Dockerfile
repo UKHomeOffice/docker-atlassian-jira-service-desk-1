@@ -41,7 +41,9 @@ RUN set -x \
 #     && echo 'CATALINA_OPTS="-Dcom.sun.management.jmxremote.ssl=false ${CATALINA_OPTS}"' >> ${JIRA_INSTALL}/bin/setenv.sh \
 #     && echo 'export CATALINA_OPTS' >> ${JIRA_INSTALL}/bin/setenv.sh
 
-RUN echo 'export CATALINA_OPTS' >> ${JIRA_INSTALL}/bin/setenv.sh
+RUN echo 'CATALINA_OPTS="-Xms${JVM_MINIMUM_MEMORY:="1g"} ${CATALINA_OPTS}"' >> ${JIRA_INSTALL}/bin/setenv.sh \
+    && echo 'CATALINA_OPTS="-Xms${JVM_MAXIMUM_MEMORY:="6g"} ${CATALINA_OPTS}"' >> ${JIRA_INSTALL}/bin/setenv.sh \
+    && echo 'export CATALINA_OPTS' >> ${JIRA_INSTALL}/bin/setenv.sh
 
 # suppressing 'The encoding [binary] is not recognised by the JRE' warning bug: https://jira.atlassian.com/browse/JRASERVER-71265
 RUN echo "org.apache.catalina.connector.Response.level = ERROR" >> ${JIRA_INSTALL}/conf/logging.properties
