@@ -36,8 +36,8 @@ RUN echo 'export CATALINA_OPTS' >> ${JIRA_INSTALL}/bin/setenv.sh
 # suppressing 'The encoding [binary] is not recognised by the JRE' warning bug: https://jira.atlassian.com/browse/JRASERVER-71265
 RUN echo "org.apache.catalina.connector.Response.level=ERROR" >> ${JIRA_INSTALL}/conf/logging.properties
 
-RUN wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
-      -O /usr/local/share/ca-certificates/rds-combined-ca-bundle.pem && \
+RUN wget https://truststore.pki.rds.amazonaws.com/eu-west-2/eu-west-2-bundle.pem \
+      -O /usr/local/share/ca-certificates/eu-west-2-bundle.pem && \
     update-ca-certificates
 
 # Reference the UID for the jira user.
